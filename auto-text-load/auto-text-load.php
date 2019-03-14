@@ -74,7 +74,7 @@ class dynamic_input
         // Check if the current pagename slug exists in the url
         if (preg_match($dirString, $url)) {
             // Retrieve the content and explode the array
-            $text = explode('[placeholder dynamic text]', $html_document);
+            $text = explode('[auto_text_load]', $html_document);
         } else {
             echo "Pagename and url dont match". "<br>";
             $text = the_post();

@@ -1,8 +1,8 @@
 {
 	"name" : "auto-text-load",
-	"version" : "1.3",
-	"download_url" : "https://github.com/gerard1987/auto-text-load.zip",
+	"version" : "0.1",
+	"download_url" : "https://github.com/gerard1987/auto-text-load/blob/master/auto-text-load-0.1.zip",
 	"sections" : {
-		"description" : "Auto text load retrieves text from server by url basename matching docx file title. Shortcodes => [pagename] [telnr] [telnr type='link_tel_number']"
+		"description" : "Auto-text-load returns text from .docx file matching the pagename into the shortcode. \n Shortcodes => [textload] [pagename] [telnr] [telnr type='link_tel_number']"
 	}
 }

@@ -3,7 +3,7 @@ class location_number
 {
     /**
      * Get page name, set variables and perform regex
-     * to get the formatted location name out of the page url
+     * to get the formatted location number out of the page url
      */    
     public function dynamic_number( $atts ){
         
@@ -18,7 +18,7 @@ class location_number
         $tel_number;
         $current_page_name = $_SERVER['REQUEST_URI'];
         
-        // Regex operations
+        // Get location name out of url
         $current_page = preg_replace("/\//", "", $current_page_name); 
         $temp = preg_match('/-(.*)/', $current_page_name, $preg_result);
         if ($preg_result) {

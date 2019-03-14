@@ -1,11 +1,11 @@
 <?php
+/**
+ * Returns basename or stripped city out of url
+ * [pagename] for basename
+ * [pagename type="location"] for location name
+ */
 class formatted_pagename
 {
-   /**
-     * Add second shortcode for placing the location name
-     * [pagename] for basename
-     * [pagename type="location"] for stripped location name
-     */
     public function dynamic_pagename( $atts ){
         // Retrieve the file location from site directory with same name as the page slug.
         $current_page_name = $_SERVER['REQUEST_URI'];

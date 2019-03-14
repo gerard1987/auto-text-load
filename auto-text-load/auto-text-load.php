@@ -3,21 +3,20 @@
 Plugin Name:  Auto text load
 Plugin URI:   https://github.com/gerard1987/auto-text-load
 Description:  Retrieves file with same page slug as the url, gets the content from within a .docx file.
-Version:      1.3
+Version:      0.1
 Author:       Gerard de Way
 Author URI:   https://github.com/gerard1987
 License:      GPL2
 License URI:  https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain:  wporg
 Domain Path:  /languages
-Shortcode Syntax: Default:[textload] || [textload type="textone"] || [textload type="texttwo"] || [telnr] || [telnr type='link_tel_number'] || [pagename] [pagename type="location"]
+Shortcode Syntax: Default:[textload] || [textload type="text-one"] || [textload type="text-two"]... || [telnr] || [telnr type='link_tel_number'] || [pagename] [pagename type="location"]
 */
 
 // Plugin updater
-
 require 'plugin-update-checker/plugin-update-checker.php';
 $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/gerard1987/auto-text-load.json',
+	'https://github.com/gerard1987/auto-text-load/blob/master/auto-text-load/auto-text-load.json',
 	__FILE__,
 	'auto-text-load_updater'
 );
@@ -28,17 +27,14 @@ register_activation_hook( __FILE__, array( 'dynamic_input', 'install' ) );
 // Define global constants
 $plugin_dir = plugin_dir_path( __FILE__ );
 
-
 // Includes
 include_once $plugin_dir . 'includes/document_extension.php';
 include_once $plugin_dir . 'includes/formatted_pagename.php';
 include_once $plugin_dir . 'includes/location_number.php';
 
 /**
- * Retrieve the matched file and convert it in the readDocx function
- * Explode the file, and return in a array, define wich textarea should be retrieved.
- * based on what shortcode attribute has been used
- * Shortcode Syntax: Default:[textload] || [textload type="textone"] || [textload type="texttwo"] || [textload type="textthree..."]
+ * Retrieve a .docx file from the server, with the same name as the page name.
+ * Splits up the .docx file with placeholder, and writes to the area's with the shortcode.
  */
 class dynamic_input
 {
@@ -46,25 +42,26 @@ class dynamic_input
     static function install() {
         // do not generate any output here
     }
+    
     /**
-     * Retrieve a .docx file from the server, with the same name as the page name.
-     * explode thrue the .docx file, with placholders and write the area's to the page with shortcode
-     */    
+     * Get current page, convert the .docx file and explode the content, return the text section to the shortcode.
+     */
     public function auto_text_load( $atts ){
 
         // Global variables
         $currentExtension = ".docx";
         $currentFolder = "/teksten";
 
-        // File location
+        // Set page and replace slashes for permalink compatibility
         $currentDirectory = getcwd();
         $currentPage = $_SERVER['REQUEST_URI'];
-        // Replace slashes for permalink compatibility
-        $currentPage = '/' . preg_replace("/\//", "", $currentPage); 
+        $currentPage = '/' . preg_replace("/\//", "", $currentPage);
+
+        // Set file and url
         $file = $currentDirectory . $currentFolder . $currentPage . $currentExtension;
         $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 
-        // Convert the document to text, and to html after that. 
+        // Convert the document to useable html text. 
         $class_ref = new document_extension;
         $converted_document = &$class_ref->readDocx($file);
         $html_document = html_entity_decode ($converted_document);
@@ -73,7 +70,7 @@ class dynamic_input
 
         // Check if the current pagename slug exists in the url
         if (preg_match($dirString, $url)) {
-            // Retrieve the content and explode the array
+            // Split up the content on the shortcode
             $text = explode('[auto_text_load]', $html_document);
         } else {
             echo "Pagename and url dont match". "<br>";
@@ -86,52 +83,52 @@ class dynamic_input
         ), $atts ) );
 
         switch( $type ){
-            case 'textone': 
+            case 'text-one': 
                 $output = $text[1];
                 break;
-            case 'texttwo': 
+            case 'text-two': 
                 $output = $text[2];
                 break;
-            case 'textthree': 
+            case 'text-three': 
                 $output = $text[3];
                 break;
-            case 'textfour': 
+            case 'text-four': 
                 $output = $text[4];
                 break;
-            case 'textfive': 
+            case 'text-five': 
                 $output = $text[5];
                 break;
-            case 'textsix': 
+            case 'text-six': 
                 $output = $text[6];
                 break;
-            case 'textseven': 
+            case 'text-seven': 
                 $output = $text[7];
                 break;
-            case 'texteight': 
+            case 'text-eight': 
                 $output = $text[8];
                 break;
-            case 'textnine': 
+            case 'text-nine': 
                 $output = $text[9];
                 break;
-            case 'textten': 
+            case 'text-ten': 
                 $output = $text[10];
                 break;
-            case 'texteleven': 
+            case 'text-eleven': 
                 $output = $text[11];
                 break;  
-            case 'texttwelve': 
+            case 'text-twelve': 
                 $output = $text[12];
                 break;   
-            case 'textthirteen': 
+            case 'text-thirteen': 
                 $output = $text[13];
                 break;          
-            case 'textfourteen': 
+            case 'text-fourteen': 
                 $output = $text[14];
                 break;   
-            case 'textfifteen': 
+            case 'text-fifteen': 
                 $output = $text[15];
                 break;   
-            case 'textsixteen': 
+            case 'text-sixteen': 
                 $output = $text[16];
                 break;                                         
             default:
